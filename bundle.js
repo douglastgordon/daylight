@@ -44,10 +44,11 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	var SunCalc = __webpack_require__(1);
 	var milisecondsPerDay = 86400000;
+	var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 	
 	var yearDaylight = function yearDaylight(lat, long) {
 	  var milisecondsDaylight = [];
@@ -58,11 +59,41 @@
 	  return milisecondsDaylight;
 	};
 	
+	var monthlyDaylight = function monthlyDaylight(lat, long) {
+	  var milisecondsDaylight = yearDaylight(lat, long);
+	  var percentageDaylight = {};
+	  var count = 0;
+	  months.forEach(function (month) {
+	
+	    var monthLength = void 0;
+	    if (month === "February") {
+	      monthLength = 29;
+	    } else if (["April", "June", "September", "November"].includes(month)) {
+	      monthLength = 30;
+	    } else {
+	      monthLength = 31;
+	    }
+	
+	    var total = monthLength * milisecondsPerDay;
+	    var arrSlice = milisecondsDaylight.slice(count, count + monthLength);
+	    var totalDaylight = arrSlice.reduce(function (a, b) {
+	      return a + b;
+	    }, 0);
+	    var perc = totalDaylight / total * 100;
+	    percentageDaylight[month] = perc;
+	    count += monthLength;
+	  });
+	
+	  return percentageDaylight;
+	};
+	
 	var daylight = function daylight(date, lat, long) {
 	  var times = SunCalc.getTimes(date, lat, long);
 	  var sunset = times.sunset;
 	  var sunrise = times.sunrise;
 	  var diff = sunset - sunrise;
+	  debugger;
+	
 	  return diff;
 	};
 	
@@ -72,7 +103,7 @@
 	  for (var month = 0; month < 12; month++) {
 	    for (var day = 1; day <= 31; day++) {
 	
-	      if (day === 30 && month == 2) {
+	      if (day === 30 && month === 2) {
 	        break;
 	      } else if (day === 31 && monthsWith30Days.includes(month)) {
 	        break;
@@ -85,7 +116,7 @@
 	  return dates;
 	};
 	
-	var test = yearDaylight(51.5, -0.1);
+	var test = monthlyDaylight(70, -0.1);
 	console.log(test);
 
 /***/ },

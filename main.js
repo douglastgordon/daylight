@@ -1,6 +1,18 @@
 const SunCalc = require('suncalc');
 const milisecondsPerDay = 86400000;
-
+const months = ["January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December"
+              ];
 
 const yearDaylight = (lat, long) => {
   const milisecondsDaylight = [];
@@ -11,14 +23,44 @@ const yearDaylight = (lat, long) => {
   return milisecondsDaylight;
 };
 
+const monthlyDaylight = (lat, long) => {
+  const milisecondsDaylight = yearDaylight(lat, long);
+  let percentageDaylight = {};
+  let count = 0;
+  months.forEach((month)=>{
+
+    let monthLength;
+    if (month === "February"){
+      monthLength = 29;
+    } else if (["April", "June", "September", "November"].includes(month)){
+      monthLength = 30;
+    } else {
+      monthLength = 31;
+    }
+
+    let total = monthLength * milisecondsPerDay;
+    let arrSlice = milisecondsDaylight.slice(count, count + monthLength);
+    let totalDaylight = arrSlice.reduce((a, b) => a + b, 0);
+    let perc = (totalDaylight/total)*100;
+    percentageDaylight[month] = perc;
+    count += monthLength;
+  });
+
+  return percentageDaylight;
+};
+
+
+
+
 const daylight = (date, lat, long) => {
   const times = SunCalc.getTimes(date, lat, long);
   const sunset = times.sunset;
   const sunrise = times.sunrise;
   const diff = sunset - sunrise;
+  debugger
+
   return diff;
 };
-
 
 const datesOf2016 = () => {
   let dates = [];
@@ -26,7 +68,7 @@ const datesOf2016 = () => {
   for (let month = 0; month < 12; month++){
     for (let day = 1; day <= 31; day++){
 
-      if (day === 30 && month == 2){
+      if (day === 30 && month === 2){
         break;
       } else if (day === 31 && monthsWith30Days.includes(month)){
         break;
@@ -39,5 +81,5 @@ const datesOf2016 = () => {
   return dates;
 };
 
-let test = yearDaylight(51.5, -0.1);
+let test = monthlyDaylight(70, -0.1);
 console.log(test);
