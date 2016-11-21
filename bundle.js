@@ -49,19 +49,44 @@
 	var SunCalc = __webpack_require__(1);
 	var milisecondsPerDay = 86400000;
 	
-	var yearDaylight = function yearDaylight(lat, long) {};
+	var yearDaylight = function yearDaylight(lat, long) {
+	  var milisecondsDaylight = [];
+	  var dates = datesOf2016();
+	  dates.forEach(function (date) {
+	    milisecondsDaylight.push(daylight(date, lat, long));
+	  });
+	  return milisecondsDaylight;
+	};
 	
 	var daylight = function daylight(date, lat, long) {
-	  var currentDate = Date.now();
-	  var times = SunCalc.getTimes(currentDate, lat, long);
+	  var times = SunCalc.getTimes(date, lat, long);
 	  var sunset = times.sunset;
 	  var sunrise = times.sunrise;
 	  var diff = sunset - sunrise;
 	  return diff;
 	};
 	
-	var last365 = function last365() {};
-	daylight(51.5, -0.1);
+	var datesOf2016 = function datesOf2016() {
+	  var dates = [];
+	  var monthsWith30Days = [4, 6, 9, 10];
+	  for (var month = 0; month < 12; month++) {
+	    for (var day = 1; day <= 31; day++) {
+	
+	      if (day === 30 && month == 2) {
+	        break;
+	      } else if (day === 31 && monthsWith30Days.includes(month)) {
+	        break;
+	      } else {
+	        var newDate = new Date(2016, month, day);
+	        dates.push(newDate);
+	      }
+	    }
+	  }
+	  return dates;
+	};
+	
+	var test = yearDaylight(51.5, -0.1);
+	console.log(test);
 
 /***/ },
 /* 1 */
