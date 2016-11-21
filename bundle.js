@@ -92,9 +92,21 @@
 	  var sunset = times.sunset;
 	  var sunrise = times.sunrise;
 	  var diff = sunset - sunrise;
-	  debugger;
-	
+	  if (isNaN(diff)) {
+	    diff = fixDiff(diff, lat);
+	  }
 	  return diff;
+	};
+	
+	//fixes diff when sun doesn't rise or set
+	var fixDiff = function fixDiff(diff, lat) {
+	  var fixedDiff = void 0;
+	  if (lat > 0) {
+	    fixedDiff = milisecondsPerDay;
+	  } else {
+	    fixedDiff = 0;
+	  }
+	  return fixedDiff;
 	};
 	
 	var datesOf2016 = function datesOf2016() {
@@ -116,7 +128,7 @@
 	  return dates;
 	};
 	
-	var test = monthlyDaylight(70, -0.1);
+	var test = monthlyDaylight(-70, -0.1);
 	console.log(test);
 
 /***/ },

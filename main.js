@@ -56,10 +56,22 @@ const daylight = (date, lat, long) => {
   const times = SunCalc.getTimes(date, lat, long);
   const sunset = times.sunset;
   const sunrise = times.sunrise;
-  const diff = sunset - sunrise;
-  debugger
-
+  let diff = sunset - sunrise;
+  if (isNaN(diff)){
+    diff = fixDiff(diff, lat);
+  }
   return diff;
+};
+
+//fixes diff when sun doesn't rise or set
+const fixDiff = (diff, lat) => {
+  let fixedDiff;
+  if (lat > 0){
+    fixedDiff = milisecondsPerDay;
+  } else {
+    fixedDiff = 0;
+  }
+  return fixedDiff;
 };
 
 const datesOf2016 = () => {
@@ -81,5 +93,5 @@ const datesOf2016 = () => {
   return dates;
 };
 
-let test = monthlyDaylight(70, -0.1);
+let test = monthlyDaylight(-70, -0.1);
 console.log(test);
