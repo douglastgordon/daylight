@@ -59,6 +59,18 @@
 	  return milisecondsDaylight;
 	};
 	
+	var totalLight = function totalLight(lat, long) {
+	  var milisecondsDaylight = yearDaylight(lat, long);
+	  var total = 0;
+	  milisecondsDaylight.forEach(function (month) {
+	    total += month;
+	  });
+	  var seconds = total / 1000;
+	  var minutes = seconds / 60;
+	  var hours = minutes / 60;
+	  return hours;
+	};
+	
 	var monthlyDaylight = function monthlyDaylight(lat, long) {
 	  var milisecondsDaylight = yearDaylight(lat, long);
 	  var percentageDaylight = {};
@@ -128,7 +140,7 @@
 	  return dates;
 	};
 	
-	var test = monthlyDaylight(-70, -0.1);
+	var test = totalLight(-70, -0.1);
 	console.log(test);
 
 /***/ },

@@ -23,6 +23,18 @@ const yearDaylight = (lat, long) => {
   return milisecondsDaylight;
 };
 
+const totalLight = (lat, long) => {
+  const milisecondsDaylight = yearDaylight(lat, long);
+  let total = 0;
+  milisecondsDaylight.forEach((month) => {
+    total += month;
+  });
+  const seconds = total/1000;
+  const minutes = seconds/60;
+  const hours = minutes/60;
+  return hours;
+};
+
 const monthlyDaylight = (lat, long) => {
   const milisecondsDaylight = yearDaylight(lat, long);
   let percentageDaylight = {};
@@ -93,5 +105,6 @@ const datesOf2016 = () => {
   return dates;
 };
 
-let test = monthlyDaylight(-70, -0.1);
+
+let test = totalLight(-70, -0.1);
 console.log(test);
