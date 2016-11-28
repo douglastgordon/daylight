@@ -16,7 +16,6 @@ body {
   height: 100%;
   width: 5%;
   margin: 5px;
-  text-align: left;
 }
 
 .total {
@@ -24,19 +23,23 @@ body {
   width: 100%;
   border: 1px solid #303F9F;
   background-color: #303F9F;
+  position: relative;
 }
 
 .daylight {
+  width: 100%;
   background-color: #FFEB3B;
-
+  position: absolute;
+  bottom: 0;
 }
 
 h3 {
   font-size: 15px;
-  -webkit-transform: rotate(-90deg);
+  /*-webkit-transform: rotate(-90deg);*/
 
 }
 h1 {
+  font-size: 36px;
   font-family: 'Bungee', cursive;
   display: inline-block;
 }

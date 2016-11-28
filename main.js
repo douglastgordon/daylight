@@ -1,18 +1,18 @@
 const SunCalc = require('suncalc');
 const $ = require('jquery');
 const milisecondsPerDay = 86400000;
-const months = ["January",
-                "February",
-                "March",
-                "April",
+const months = ["Jan",
+                "Feb",
+                "Mar",
+                "Apr",
                 "May",
-                "June",
-                "July",
-                "August",
-                "September",
-                "October",
-                "November",
-                "December"
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec"
               ];
 
 $('#input').on("input", () => enterText());
