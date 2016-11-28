@@ -112,14 +112,24 @@ const datesOf2016 = () => {
   return dates;
 };
 
+const showPerc = (e, month) => {
+  $('.perc').html(`${month} daylight: ${e.currentTarget.id}% `);
+};
+const hidePerc = (e) => {
+  $('.perc').html("");
+};
 
 const play = () => {
   let arr = monthlyDaylight(35,64);
-  console.log(arr);
-
+  let average = 0;
   months.forEach((month) => {
     let monthContainer = $('<div></div>');
     monthContainer.addClass('month');
+    monthContainer.attr('month', month);
+    monthContainer.attr("id",Math.floor(arr[month]));
+    monthContainer.on("mouseover", (e) => showPerc(e, month));
+    // monthContainer.on("mouseout", (e) => hidePerc(e));
+
     let totalContainer = $('<div></div>');
     totalContainer.addClass('total');
     let daylightContainer = $('<div></div>');
@@ -131,9 +141,13 @@ const play = () => {
     monthContainer.append(totalContainer);
     monthContainer.append(monthName);
     $('.year').append(monthContainer);
+    average += arr[month];
   });
-
+  average = Math.floor(average / 12);
+  $('.average').html(`Yearly daylight: ${average}%`);
 };
+
+
 
 
 play();

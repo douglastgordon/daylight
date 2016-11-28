@@ -147,13 +147,26 @@
 	  return dates;
 	};
 	
+	var showPerc = function showPerc(e, month) {
+	  $('.perc').html(month + ' daylight: ' + e.currentTarget.id + '% ');
+	};
+	var hidePerc = function hidePerc(e) {
+	  $('.perc').html("");
+	};
+	
 	var play = function play() {
 	  var arr = monthlyDaylight(35, 64);
-	  console.log(arr);
-	
+	  var average = 0;
 	  months.forEach(function (month) {
 	    var monthContainer = $('<div></div>');
 	    monthContainer.addClass('month');
+	    monthContainer.attr('month', month);
+	    monthContainer.attr("id", Math.floor(arr[month]));
+	    monthContainer.on("mouseover", function (e) {
+	      return showPerc(e, month);
+	    });
+	    // monthContainer.on("mouseout", (e) => hidePerc(e));
+	
 	    var totalContainer = $('<div></div>');
 	    totalContainer.addClass('total');
 	    var daylightContainer = $('<div></div>');
@@ -165,7 +178,10 @@
 	    monthContainer.append(totalContainer);
 	    monthContainer.append(monthName);
 	    $('.year').append(monthContainer);
+	    average += arr[month];
 	  });
+	  average = Math.floor(average / 12);
+	  $('.average').html('Yearly daylight: ' + average + '%');
 	};
 	
 	play();
