@@ -1,4 +1,5 @@
 const SunCalc = require('suncalc');
+const $ = require('jquery');
 const milisecondsPerDay = 86400000;
 const months = ["January",
                 "February",
@@ -14,7 +15,13 @@ const months = ["January",
                 "December"
               ];
 
-const yearDaylight = (lat, long) => {
+$('#input').on("input", () => enterText());
+
+const enterText = (e) => {
+};
+
+
+const dailyDaylight = (lat, long) => {
   const milisecondsDaylight = [];
   const dates = datesOf2016();
   dates.forEach((date)=>{
@@ -24,7 +31,7 @@ const yearDaylight = (lat, long) => {
 };
 
 const totalLight = (lat, long) => {
-  const milisecondsDaylight = yearDaylight(lat, long);
+  const milisecondsDaylight = dailyDaylight(lat, long);
   let total = 0;
   milisecondsDaylight.forEach((month) => {
     total += month;
@@ -36,7 +43,7 @@ const totalLight = (lat, long) => {
 };
 
 const monthlyDaylight = (lat, long) => {
-  const milisecondsDaylight = yearDaylight(lat, long);
+  const milisecondsDaylight = dailyDaylight(lat, long);
   let percentageDaylight = {};
   let count = 0;
   months.forEach((month)=>{
@@ -106,5 +113,27 @@ const datesOf2016 = () => {
 };
 
 
-let test = totalLight(-70, -0.1);
-console.log(test);
+const play = () => {
+  let arr = monthlyDaylight(35,64);
+  console.log(arr);
+
+  months.forEach((month) => {
+    let monthContainer = $('<div></div>');
+    monthContainer.addClass('month');
+    let totalContainer = $('<div></div>');
+    totalContainer.addClass('total');
+    let daylightContainer = $('<div></div>');
+    daylightContainer.addClass('daylight');
+    let monthName = $("<h3></h3>");
+    monthName.append(month);
+    daylightContainer.css("height", `${arr[month]}%`);
+    totalContainer.append(daylightContainer);
+    monthContainer.append(totalContainer);
+    monthContainer.append(monthName);
+    $('.year').append(monthContainer);
+  });
+
+};
+
+
+play();

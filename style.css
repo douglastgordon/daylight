@@ -1,0 +1,42 @@
+.year {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 200px;
+  width: 100%;
+  margin-top: 40px;
+}
+
+body {
+  font-family: 'Roboto Condensed', sans-serif;
+  text-align: center;
+}
+
+.month {
+  height: 100%;
+  width: 5%;
+  margin: 5px;
+  text-align: left;
+}
+
+.total {
+  height: 80%;
+  width: 100%;
+  border: 1px solid #303F9F;
+  background-color: #303F9F;
+}
+
+.daylight {
+  background-color: #FFEB3B;
+
+}
+
+h3 {
+  font-size: 15px;
+  -webkit-transform: rotate(-90deg);
+
+}
+h1 {
+  font-family: 'Bungee', cursive;
+  display: inline-block;
+}
