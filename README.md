@@ -1,6 +1,6 @@
 #Daylight
 
-##[Live](http://wireworld.co/)
+##[Live](http://www.douglasgordon.me/daylight/)
 
 A graphical display of daylight hours for any city. Built using JavaScript, jQuery, SunCalc and the Google Geocoding API.
 
