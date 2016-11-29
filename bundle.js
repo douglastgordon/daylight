@@ -188,15 +188,16 @@
 	
 	var adjust = function adjust(coords) {
 	  var daylightPerMonth = monthlyDaylight(Math.floor(coords.lat), Math.floor(coords.lng));
+	  var average = 0;
 	  console.log(daylightPerMonth);
 	  Object.keys(daylightPerMonth).forEach(function (month) {
 	    $('.' + month).attr("id", Math.floor(daylightPerMonth[month]));
 	    $('.' + month).find(".daylight").css("height", daylightPerMonth[month] + '%');
+	    average += daylightPerMonth[month];
 	  });
+	  average = Math.floor(average / 12);
+	  $('.average').html('Yearly daylight: ' + average + '%');
 	};
-	
-	//AIzaSyAoUOHgYBU1FNoF7t7UzQchPqux_seLEHQ
-	
 	
 	var getLocationCoordinates = function getLocationCoordinates(address) {
 	  var position = {};

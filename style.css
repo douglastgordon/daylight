@@ -43,3 +43,17 @@ h1 {
   font-family: 'Bungee', cursive;
   display: inline-block;
 }
+
+#input {
+  font-family: 'Roboto Condensed', sans-serif;
+
+  padding: 10px;
+  border: none;
+  border-bottom: solid 2px black;
+  transition: border 0.3s;
+  font-size: 15px;
+}
+#input:focus {
+  outline:none;
+  border-bottom: solid 2px #FFEB3B;
+}
