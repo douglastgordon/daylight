@@ -80,6 +80,7 @@ const daylight = (date, lat, long) => {
   const sunset = times.sunset;
   const sunrise = times.sunrise;
   let diff = sunset - sunrise;
+  debugger
   if (isNaN(diff)){
     diff = fixDiff(diff, lat);
   }
@@ -121,7 +122,7 @@ const showPerc = (e, month) => {
 };
 
 const play = () => {
-  let arr = monthlyDaylight(40.7,-73.9);
+  let arr = monthlyDaylight(89,-73.9);
   let average = 0;
   months.forEach((month) => {
     let monthContainer = $('<div></div>');
