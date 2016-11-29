@@ -157,7 +157,7 @@
 	};
 	
 	var play = function play() {
-	  var arr = monthlyDaylight(35, 64);
+	  var arr = monthlyDaylight(40.7, -73.9);
 	  var average = 0;
 	  months.forEach(function (month) {
 	    var monthContainer = $('<div></div>');
