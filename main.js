@@ -80,7 +80,6 @@ const daylight = (date, lat, long) => {
   const sunset = times.sunset;
   const sunrise = times.sunrise;
   let diff = sunset - sunrise;
-  debugger
   if (isNaN(diff)){
     diff = fixDiff(diff, lat);
   }
@@ -152,7 +151,6 @@ const play = () => {
 const adjust = (coords) => {
   const daylightPerMonth = monthlyDaylight(Math.floor(coords.lat), Math.floor(coords.lng));
   let average = 0;
-  console.log(daylightPerMonth);
   Object.keys(daylightPerMonth).forEach((month) => {
     $(`.${month}`).attr("id", Math.floor(daylightPerMonth[month]));
     $(`.${month}`).find(".daylight").css("height", `${daylightPerMonth[month]}%`);

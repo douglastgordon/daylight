@@ -119,7 +119,6 @@
 	  var sunset = times.sunset;
 	  var sunrise = times.sunrise;
 	  var diff = sunset - sunrise;
-	  debugger;
 	  if (isNaN(diff)) {
 	    diff = fixDiff(diff, lat);
 	  }
@@ -193,7 +192,6 @@
 	var adjust = function adjust(coords) {
 	  var daylightPerMonth = monthlyDaylight(Math.floor(coords.lat), Math.floor(coords.lng));
 	  var average = 0;
-	  console.log(daylightPerMonth);
 	  Object.keys(daylightPerMonth).forEach(function (month) {
 	    $('.' + month).attr("id", Math.floor(daylightPerMonth[month]));
 	    $('.' + month).find(".daylight").css("height", daylightPerMonth[month] + '%');
