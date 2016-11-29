@@ -57,7 +57,9 @@
 	
 	var enterText = function enterText() {
 	  var place = $('#input').val();
-	  var coords = getLocationCoordinates(place);
+	  var info = getLocationCoordinates(place);
+	  $(".city-name").html(info[0]);
+	  adjust(info[1]);
 	};
 	
 	var dailyDaylight = function dailyDaylight(lat, long) {
@@ -160,6 +162,7 @@
 	  months.forEach(function (month) {
 	    var monthContainer = $('<div></div>');
 	    monthContainer.addClass('month');
+	    monthContainer.addClass(month);
 	    monthContainer.attr('month', month);
 	    monthContainer.attr("id", Math.floor(arr[month]));
 	    monthContainer.on("mouseover", function (e) {
@@ -183,7 +186,14 @@
 	  $('.average').html('Yearly daylight: ' + average + '%');
 	};
 	
-	var adjust = function adjust() {};
+	var adjust = function adjust(coords) {
+	  var daylightPerMonth = monthlyDaylight(Math.floor(coords.lat), Math.floor(coords.lng));
+	  console.log(daylightPerMonth);
+	  Object.keys(daylightPerMonth).forEach(function (month) {
+	    $('.' + month).attr("id", Math.floor(daylightPerMonth[month]));
+	    $('.' + month).find(".daylight").css("height", daylightPerMonth[month] + '%');
+	  });
+	};
 	
 	//AIzaSyAoUOHgYBU1FNoF7t7UzQchPqux_seLEHQ
 	
@@ -209,12 +219,9 @@
 	      }
 	    }
 	  });
-	  console.log(formattedAddress);
-	  console.log(position);
-	  return position;
-	};
 	
-	getLocationCoordinates("Moscow");
+	  return [formattedAddress, position];
+	};
 	
 	play();
 

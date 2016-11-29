@@ -19,8 +19,9 @@ $('#input').on("keyup", () => enterText());
 
 const enterText = () => {
   let place = $('#input').val();
-  const coords = getLocationCoordinates(place);
-
+  const info = getLocationCoordinates(place);
+  $(".city-name").html(info[0]);
+  adjust(info[1]);
 };
 
 
@@ -125,6 +126,7 @@ const play = () => {
   months.forEach((month) => {
     let monthContainer = $('<div></div>');
     monthContainer.addClass('month');
+    monthContainer.addClass(month);
     monthContainer.attr('month', month);
     monthContainer.attr("id",Math.floor(arr[month]));
     monthContainer.on("mouseover", (e) => showPerc(e, month));
@@ -146,8 +148,13 @@ const play = () => {
   $('.average').html(`Yearly daylight: ${average}%`);
 };
 
-const adjust = () => {
-
+const adjust = (coords) => {
+  const daylightPerMonth = monthlyDaylight(Math.floor(coords.lat), Math.floor(coords.lng));
+  console.log(daylightPerMonth);
+  Object.keys(daylightPerMonth).forEach((month) => {
+    $(`.${month}`).attr("id", Math.floor(daylightPerMonth[month]));
+    $(`.${month}`).find(".daylight").css("height", `${daylightPerMonth[month]}%`);
+  });
 };
 
 //AIzaSyAoUOHgYBU1FNoF7t7UzQchPqux_seLEHQ
@@ -176,12 +183,9 @@ const getLocationCoordinates = (address) => {
 
         }
     });
-    console.log(formattedAddress);
-    console.log(position);
-    return position;
-};
 
-getLocationCoordinates("Moscow");
+    return [formattedAddress, position];
+};
 
 
 play();
