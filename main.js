@@ -21,6 +21,9 @@ const enterText = () => {
   let place = $('#input').val();
   const info = getLocationCoordinates(place);
   $(".city-name").html(info[0]);
+  if (info[0] === ""){
+    $(".city-name").html("Enter a City");
+  }
   adjust(info[1]);
 };
 
@@ -71,9 +74,6 @@ const monthlyDaylight = (lat, long) => {
 
   return percentageDaylight;
 };
-
-
-
 
 const daylight = (date, lat, long) => {
   const times = SunCalc.getTimes(date, lat, long);
@@ -159,6 +159,7 @@ const adjust = (coords) => {
   });
   average = Math.floor(average / 12);
   $('.average').html(`Yearly daylight: ${average}%`);
+  $('.perc').html("");
 };
 
 const getLocationCoordinates = (address) => {

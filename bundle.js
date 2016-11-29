@@ -59,6 +59,9 @@
 	  var place = $('#input').val();
 	  var info = getLocationCoordinates(place);
 	  $(".city-name").html(info[0]);
+	  if (info[0] === "") {
+	    $(".city-name").html("Enter a City");
+	  }
 	  adjust(info[1]);
 	};
 	
@@ -197,6 +200,7 @@
 	  });
 	  average = Math.floor(average / 12);
 	  $('.average').html('Yearly daylight: ' + average + '%');
+	  $('.perc').html("");
 	};
 	
 	var getLocationCoordinates = function getLocationCoordinates(address) {
