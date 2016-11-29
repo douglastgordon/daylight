@@ -51,11 +51,14 @@
 	var milisecondsPerDay = 86400000;
 	var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 	
-	$('#input').on("input", function () {
+	$('#input').on("keyup", function () {
 	  return enterText();
 	});
 	
-	var enterText = function enterText(e) {};
+	var enterText = function enterText() {
+	  var place = $('#input').val();
+	  var coords = getLocationCoordinates(place);
+	};
 	
 	var dailyDaylight = function dailyDaylight(lat, long) {
 	  var milisecondsDaylight = [];
@@ -150,9 +153,6 @@
 	var showPerc = function showPerc(e, month) {
 	  $('.perc').html(month + ' daylight: ' + e.currentTarget.id + '% ');
 	};
-	var hidePerc = function hidePerc(e) {
-	  $('.perc').html("");
-	};
 	
 	var play = function play() {
 	  var arr = monthlyDaylight(35, 64);
@@ -165,7 +165,6 @@
 	    monthContainer.on("mouseover", function (e) {
 	      return showPerc(e, month);
 	    });
-	    // monthContainer.on("mouseout", (e) => hidePerc(e));
 	
 	    var totalContainer = $('<div></div>');
 	    totalContainer.addClass('total');
@@ -183,6 +182,39 @@
 	  average = Math.floor(average / 12);
 	  $('.average').html('Yearly daylight: ' + average + '%');
 	};
+	
+	var adjust = function adjust() {};
+	
+	//AIzaSyAoUOHgYBU1FNoF7t7UzQchPqux_seLEHQ
+	
+	
+	var getLocationCoordinates = function getLocationCoordinates(address) {
+	  var position = {};
+	  var formattedAddress = "";
+	  $.ajax({
+	    url: 'http://maps.google.com/maps/api/geocode/json',
+	    type: 'GET',
+	    data: {
+	      address: address,
+	      sensor: false
+	    },
+	    async: false,
+	    success: function success(result) {
+	      try {
+	        position.lat = result.results[0].geometry.location.lat;
+	        position.lng = result.results[0].geometry.location.lng;
+	        formattedAddress = result.results[0].formatted_address;
+	      } catch (err) {
+	        position = null;
+	      }
+	    }
+	  });
+	  console.log(formattedAddress);
+	  console.log(position);
+	  return position;
+	};
+	
+	getLocationCoordinates("Moscow");
 	
 	play();
 

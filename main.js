@@ -15,9 +15,12 @@ const months = ["Jan",
                 "Dec"
               ];
 
-$('#input').on("input", () => enterText());
+$('#input').on("keyup", () => enterText());
 
-const enterText = (e) => {
+const enterText = () => {
+  let place = $('#input').val();
+  const coords = getLocationCoordinates(place);
+
 };
 
 
@@ -115,9 +118,6 @@ const datesOf2016 = () => {
 const showPerc = (e, month) => {
   $('.perc').html(`${month} daylight: ${e.currentTarget.id}% `);
 };
-const hidePerc = (e) => {
-  $('.perc').html("");
-};
 
 const play = () => {
   let arr = monthlyDaylight(35,64);
@@ -128,7 +128,6 @@ const play = () => {
     monthContainer.attr('month', month);
     monthContainer.attr("id",Math.floor(arr[month]));
     monthContainer.on("mouseover", (e) => showPerc(e, month));
-    // monthContainer.on("mouseout", (e) => hidePerc(e));
 
     let totalContainer = $('<div></div>');
     totalContainer.addClass('total');
@@ -147,7 +146,42 @@ const play = () => {
   $('.average').html(`Yearly daylight: ${average}%`);
 };
 
+const adjust = () => {
 
+};
+
+//AIzaSyAoUOHgYBU1FNoF7t7UzQchPqux_seLEHQ
+
+
+const getLocationCoordinates = (address) => {
+    let position = {};
+    let formattedAddress = "";
+    $.ajax({
+        url : 'http://maps.google.com/maps/api/geocode/json',
+        type : 'GET',
+        data : {
+            address : address,
+            sensor : false
+        },
+        async : false,
+        success : function(result) {
+            try {
+                position.lat = result.results[0].geometry.location.lat;
+                position.lng = result.results[0].geometry.location.lng;
+                formattedAddress = result.results[0].formatted_address;
+
+            } catch(err) {
+                position = null;
+            }
+
+        }
+    });
+    console.log(formattedAddress);
+    console.log(position);
+    return position;
+};
+
+getLocationCoordinates("Moscow");
 
 
 play();
